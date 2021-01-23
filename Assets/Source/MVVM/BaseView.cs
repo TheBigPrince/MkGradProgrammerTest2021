@@ -10,6 +10,11 @@ namespace Protodroid.MVVM
 
         protected T ViewModel { get; set; } = null;
 
+        private void Awake()
+        {
+            GameObject = gameObject;
+        }
+
         public void SetViewModel(T vm)
         {
             ViewModel = vm;
@@ -25,5 +30,6 @@ namespace Protodroid.MVVM
         }
 
         protected virtual void InitialiseBindings() { }
+        public GameObject GameObject { get; set; }
     }
 }

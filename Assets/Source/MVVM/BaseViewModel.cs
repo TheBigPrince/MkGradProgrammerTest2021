@@ -14,5 +14,6 @@ namespace Protodroid.MVVM
         }
 
         public abstract void NotifyView();
+        
     }
 }

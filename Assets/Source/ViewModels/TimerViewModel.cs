@@ -3,7 +3,7 @@ using Protodroid.MVVM;
 
 namespace Protodroid.Clocks.ViewModels
 {
-    public class TimerViewModel : ClockViewModel, IClock
+    public class TimerViewModel : ClockViewModel
     {
         public TimerViewModel(TimerModel model) : base(model)
         {

@@ -12,11 +12,29 @@ namespace Protodroid.Clocks
 {
     public class ClocksManager : MonoBehaviour
     {
+        #region Singleton
+        
+        public static ClocksManager instance = null;
+
+        private void CreateSingleton()
+        {
+            if (instance == null) instance = this;
+            else Destroy(this);
+        }
+
+        #endregion
+        
+
         [SerializeField]
         public ClockFactory clockFactory = null;
 
         private List<ClockViewModel> clocks = new List<ClockViewModel>();
-        
+
+
+        private void Awake()
+        {
+            CreateSingleton();
+        }
 
         private void Start()
         {
@@ -34,6 +52,15 @@ namespace Protodroid.Clocks
         {
             StopwatchModel model = new StopwatchModel {Title = "My Clock", ClockType = "Stop Watch"};
             StopwatchViewModel vm = clockFactory.Create(model);
+        }
+
+        public void DeleteClock(ClockViewModel viewModel)
+        {
+            if (clocks.Contains(viewModel) && clocks.Count > 1)
+            {
+                clocks.Remove(viewModel);
+                Destroy(viewModel.View.GameObject);
+            }
         }
     }
 }

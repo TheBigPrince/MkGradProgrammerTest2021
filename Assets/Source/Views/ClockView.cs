@@ -13,34 +13,28 @@ namespace Protodroid.Clocks.Views
         #region Inspector Exposed
 
         [SerializeField]
-        private TextMeshProUGUI titleTMP;
+        protected TextMeshProUGUI titleTMP;
         
         [SerializeField]
-        private TextMeshProUGUI categoryTMP;    
+        protected TextMeshProUGUI categoryTMP;    
         
         [SerializeField]
-        private TextMeshProUGUI displayTMP;
+        protected TextMeshProUGUI displayTMP;
 
         [SerializeField]
-        private List<Button> operationalButtons;
+        protected Button editButton;
 
         [SerializeField]
-        private Button editButton;
-
-        [SerializeField]
-        private Button deleteButton;
+        protected Button deleteButton;
 
         #endregion
+        
 
         protected override void InitialiseBindings()
         {
             ViewModel.OnSetTitle.Subscribe(title => titleTMP.text = title).AddTo(Disposer);
             ViewModel.OnSetCategory.Subscribe(category => categoryTMP.text = category).AddTo(Disposer);
-        }
-
-        protected void OperationalButtonsActive(bool isActive)
-        {
-            operationalButtons.ForEach(button => button.gameObject.SetActive(isActive));
+            deleteButton.OnClickAsObservable().Subscribe(_ => ClocksManager.instance.DeleteClock(ViewModel)).AddTo(Disposer);
         }
     }
 }
