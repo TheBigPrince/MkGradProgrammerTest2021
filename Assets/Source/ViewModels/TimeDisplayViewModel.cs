@@ -1,0 +1,15 @@
+﻿using Protodroid.Clocks.Models;
+using Protodroid.MVVM;
+
+namespace Protodroid.Clocks.ViewModels
+{
+    public class TimeDisplayViewModel : ClockViewModel, IClock
+    {
+        public TimeDisplayViewModel(TimeDisplayModel model) : base(model)
+        {
+            
+        }
+
+        public override IView View { get; set; }
+    }
+}
