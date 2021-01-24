@@ -15,12 +15,36 @@ namespace Protodroid.Clocks
 
         [SerializeField]
         private StopwatchView stopwatchPrefab;
+
+        [SerializeField]
+        private TimerView timerPrefab;
+
+        [SerializeField]
+        private TimeDisplayView timeDisplayPrefab;
         
 
         public StopwatchViewModel Create(StopwatchModel model)
         {
             StopwatchViewModel vm = new StopwatchViewModel(model);
             StopwatchView view = Instantiate(stopwatchPrefab, clockContainer);
+            view.SetViewModel(vm);
+            onClockCreated?.OnNext(vm);
+            return vm;
+        }
+        
+        public TimerViewModel Create(TimerModel model)
+        {
+            TimerViewModel vm = new TimerViewModel(model);
+            TimerView view = Instantiate(timerPrefab, clockContainer);
+            view.SetViewModel(vm);
+            onClockCreated?.OnNext(vm);
+            return vm;
+        }
+        
+        public TimeDisplayViewModel Create(TimeDisplayModel model)
+        {
+            TimeDisplayViewModel vm = new TimeDisplayViewModel(model);
+            TimeDisplayView view = Instantiate(timeDisplayPrefab, clockContainer);
             view.SetViewModel(vm);
             onClockCreated?.OnNext(vm);
             return vm;

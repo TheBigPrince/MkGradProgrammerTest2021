@@ -8,7 +8,7 @@ namespace Protodroid.Clocks.ViewModels
     public abstract class ClockViewModel : BaseViewModel
     {
         // Model - Definition
-        private ClockModel clockModel;
+        protected ClockModel model;
 
         #region Fields
         private string title = "";
@@ -33,9 +33,9 @@ namespace Protodroid.Clocks.ViewModels
         
         public ClockViewModel(ClockModel clockModel)
         {
-            this.clockModel = clockModel;
+            this.model = clockModel;
             Title = clockModel.Title;
-            Category = clockModel.ClockType;
+            Category = clockModel.ClockCategory;
         }
 
         

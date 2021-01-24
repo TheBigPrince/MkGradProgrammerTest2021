@@ -1,4 +1,5 @@
-﻿using Protodroid.Clocks.ViewModels;
+﻿using System;
+using Protodroid.Clocks.ViewModels;
 using Protodroid.MVVM;
 using UniRx;
 using UnityEngine;
@@ -35,9 +36,8 @@ namespace Protodroid.Clocks.Views
 
         private void UpdateStopwatchDisplay(float currentTime)
         {
-            string seconds = ((int) currentTime).ToString();
-            string milliSeconds = ((currentTime * 100f) % 100).ToString("00");
-            displayTMP.text = $"{seconds}s {milliSeconds}";
+            TimeSpan time = TimeSpan.FromSeconds(currentTime);
+            displayTMP.text = $"{time.Hours}h {time.Minutes}m {time.Seconds}s";
         }
     }
 }

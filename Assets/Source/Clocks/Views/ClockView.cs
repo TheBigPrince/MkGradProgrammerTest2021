@@ -29,12 +29,12 @@ namespace Protodroid.Clocks.Views
 
         #endregion
         
-
         protected override void InitialiseBindings()
         {
             ViewModel.OnSetTitle.Subscribe(title => titleTMP.text = title).AddTo(Disposer);
             ViewModel.OnSetCategory.Subscribe(category => categoryTMP.text = category).AddTo(Disposer);
             deleteButton.OnClickAsObservable().Subscribe(_ => ClocksManager.instance.DeleteClock(ViewModel)).AddTo(Disposer);
+            editButton.OnClickAsObservable().Subscribe(_ => ClocksManager.instance.EditClock(ViewModel)).AddTo(Disposer);
         }
     }
 }

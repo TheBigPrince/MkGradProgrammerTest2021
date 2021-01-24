@@ -2,6 +2,9 @@
 {
     public class TimeDisplayModel : ClockModel
     {
-        
+        public TimeDisplayModel()
+        {
+            ClockCategory = "Time";
+        }
     }
 }

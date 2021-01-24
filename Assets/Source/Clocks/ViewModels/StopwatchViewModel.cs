@@ -10,25 +10,35 @@ namespace Protodroid.Clocks.ViewModels
     {
         public override IView View { get; set; }
 
+        #region Fields
+
         private bool stopwatchActive = false;
+        private float time = 0f;
+
+        #endregion
+
+        #region Properties
+
         public bool StopwatchActive
         {
             get => stopwatchActive;
             set => OnPropertyChanged(ref stopwatchActive, value, onStopwatchActive);
         }
-        
-        private float time = 0f;
+
         public float Time
         {
             get => time;
             set => OnPropertyChanged(ref time, value, onUpdateTime);
         }
+        
+        #endregion
+        
 
         public StopwatchViewModel(StopwatchModel model) : base(model)
         {
             ResetStopwatch(Unit.Default);
 
-            Observable.EveryUpdate()
+            Observable.Interval(TimeSpan.FromSeconds(1f))
                 .Where(_ => StopwatchActive)
                 .Subscribe(IncrementStopwatch)
                 .AddTo(disposer);
@@ -36,9 +46,8 @@ namespace Protodroid.Clocks.ViewModels
 
         private void IncrementStopwatch(long _)
         {
-            Time += UnityEngine.Time.deltaTime;
+            Time += 1f;
         }
-        
 
         public void ToggleStopwatchState(Unit _)
         {
@@ -51,15 +60,26 @@ namespace Protodroid.Clocks.ViewModels
             Time = 0f;
         }
 
-
         private CompositeDisposable disposer = new CompositeDisposable();
         
-
-        private Subject<bool> onStopwatchActive = new Subject<bool>();
-        public IObservable<bool> OnStopwatchActive => onStopwatchActive;
         
+        #region Notifications
+        
+        private Subject<bool> onStopwatchActive = new Subject<bool>();
         private Subject<float> onUpdateTime = new Subject<float>();
+        
+        public IObservable<bool> OnStopwatchActive => onStopwatchActive;
         public IObservable<float> OnUpdateTime => onUpdateTime;
-
+        
+        public override void NotifyView()
+        {
+            base.NotifyView();
+            onStopwatchActive?.OnNext(StopwatchActive);
+            onUpdateTime?.OnNext(Time);
+        }
+        
+        #endregion
+        
+        
     }
 }

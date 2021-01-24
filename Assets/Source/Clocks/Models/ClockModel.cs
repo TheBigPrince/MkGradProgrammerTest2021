@@ -29,7 +29,7 @@ namespace Protodroid.Clocks.Models
             set => title = value;
         }
         
-        public string ClockType
+        public string ClockCategory
         {
             get => clockCategory;
             set => clockCategory = value;
