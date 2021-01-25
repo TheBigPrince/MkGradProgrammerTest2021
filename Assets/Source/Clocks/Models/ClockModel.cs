@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Protodroid.MVVM;
+using UniRx;
 using UnityEngine;
 
 namespace Protodroid.Clocks.Models
 {
-    public class ClockModel
+    public class ClockModel : BaseModel<ClockModel>
     {
         #region Fields
         
@@ -20,21 +22,20 @@ namespace Protodroid.Clocks.Models
         public string ID
         {
             get => id;
-            private set => id = value;
+            private set => OnPropertyChanged(ref id, value);
         }
 
         public string Title
         {
             get => title;
-            set => title = value;
+            set => OnPropertyChanged(ref title, value);
         }
         
         public string ClockCategory
         {
             get => clockCategory;
-            set => clockCategory = value;
+            set => OnPropertyChanged(ref clockCategory, value);
         }
-
         #endregion
         
         
@@ -42,6 +43,5 @@ namespace Protodroid.Clocks.Models
         {
             id = Guid.NewGuid().ToString();
         }
-        
     }
 }

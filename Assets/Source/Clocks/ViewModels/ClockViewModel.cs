@@ -26,24 +26,36 @@ namespace Protodroid.Clocks.ViewModels
         public string Category
         {
             get => category;
-            set => OnPropertyChanged(ref category, value, onSetTitle);
+            set => OnPropertyChanged(ref category, value, onSetCategory);
         }
         #endregion
 
         
         public ClockViewModel(ClockModel clockModel)
         {
-            this.model = clockModel;
-            Title = clockModel.Title;
-            Category = clockModel.ClockCategory;
+            model = clockModel;
+            UpdateViewModel(model);
+            model.OnModelUpdated
+                .Subscribe(UpdateViewModel);
         }
 
+        public void EditClock(Unit _)
+        {
+            EditClockManager.instance.EditClock(model);
+        }
         
         public override void NotifyView()
         {
             onSetTitle?.OnNext(title);
             onSetCategory?.OnNext(category);
         }
+
+        private void UpdateViewModel(ClockModel clockModel)
+        {
+            Title = model.Title;
+            Category = model.ClockCategory;
+        }
+        
 
         #region Events
 

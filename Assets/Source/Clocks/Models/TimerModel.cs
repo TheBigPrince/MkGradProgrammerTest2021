@@ -2,7 +2,13 @@
 {
     public class TimerModel : ClockModel
     {
-        public float CountdownTime { get; set; } = 10f;
+        private float countdownTime = 10f;
+
+        public float CountdownTime
+        {
+            get => countdownTime;
+            set => OnPropertyChanged(ref countdownTime, value);
+        }
         
         public TimerModel(float timeInSeconds) : base()
         {

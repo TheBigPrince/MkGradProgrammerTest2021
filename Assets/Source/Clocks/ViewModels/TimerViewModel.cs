@@ -40,6 +40,13 @@ namespace Protodroid.Clocks.ViewModels
         public TimerViewModel(TimerModel model) : base(model)
         {
             timerModel = model;
+            
+            UpdateViewModel(model);
+
+            timerModel.OnModelUpdated
+                .Subscribe(UpdateViewModel)
+                .AddTo(disposer);
+            
             ResetTimer(Unit.Default);
             Observable.Interval(TimeSpan.FromSeconds(1f))
                 .Where(_ => TimerActive && Time >= 0f)
@@ -64,12 +71,18 @@ namespace Protodroid.Clocks.ViewModels
 
         public void ResetTimer(Unit _)
         {
+            UpdateViewModel(timerModel);
+        }
+
+        private void UpdateViewModel(ClockModel model)
+        {
+            TimerModel timerModel = (TimerModel) model;
             Time = timerModel.CountdownTime;
             TimerActive = false;
         }
 
 
-        
+
         private CompositeDisposable disposer = new CompositeDisposable();
 
         #region Notifications
