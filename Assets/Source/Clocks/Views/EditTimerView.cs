@@ -3,14 +3,13 @@ using Protodroid.Clocks.ViewModels;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
+using Protodroid.Helper;
 
 namespace Protodroid.Clocks.Views
 {
     public class EditTimerView : EditClockView<EditTimerViewModel>
     {
-        [SerializeField]
-        private TMP_InputField countdownInput = null;
-        
         [SerializeField]
         private TMP_InputField hoursInput = null;
         
@@ -20,25 +19,59 @@ namespace Protodroid.Clocks.Views
         [SerializeField]
         private TMP_InputField secondsInput = null;
 
+        private float inHours = 0;
+        private float inMinutes = 0;
+        private float inSeconds = 0;
+
         protected override void InitialiseBindings()
         {
             base.InitialiseBindings();
-            
-            countdownInput.ObserveEveryValueChanged(field => field.text)
+
+            hoursInput.ObserveEveryValueChanged(field => field.text)
                 .Where(text => text.Length > 0)
-                .Subscribe(text =>
+                .Where(_ => hoursInput.IsNumber())
+                .Select(text => hoursInput.Between(0.0, 99.0))
+                .Subscribe(num =>
                 {
-                    float seconds = (float)Convert.ToDouble(text);
-                    ViewModel.CountdownTime = seconds;
+                    inHours = (float)num;
+                    OnSetTime();
                 })
                 .AddTo(Disposer);
             
-            //text => ViewModel.CountdownTime = (float) Convert.ToDouble(text)
+            minutesInput.ObserveEveryValueChanged(field => field.text)
+                .Where(text => text.Length > 0)
+                .Where(_ => minutesInput.IsNumber())
+                .Select(text => minutesInput.Between(0.0, 59.0))
+                .Subscribe(num =>
+                {
+                    inMinutes = (float)num;
+                    OnSetTime();
+                })
+                .AddTo(Disposer);
+            
+            secondsInput.ObserveEveryValueChanged(field => field.text)
+                .Where(text => text.Length > 0)
+                .Where(_ => secondsInput.IsNumber())
+                .Select(text => secondsInput.Between(0.0, 59.0))
+                .Subscribe(num =>
+                {
+                    inSeconds = (float)num;
+                    OnSetTime();
+                })
+                .AddTo(Disposer);
         }
+
+        private void OnSetTime()
+        {
+            ViewModel.CountdownTime = inHours * 3600f + inMinutes * 60f + inSeconds;
+        }
+        
         protected override void ClearInputs(Unit _)
         {
             base.ClearInputs(_);
-            countdownInput.text = "";
+            hoursInput.text = "";
+            minutesInput.text = "";
+            secondsInput.text = "";
         }
     }
 }

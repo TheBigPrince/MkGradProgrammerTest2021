@@ -26,6 +26,9 @@ public class EditClockManager : MonoBehaviour
     
     [SerializeField]
     private EditTimerView editTimerView;
+    
+    [SerializeField]
+    private EditStopwatchView editStopwatchView;
 
     private void Awake()
     {
@@ -39,13 +42,15 @@ public class EditClockManager : MonoBehaviour
         switch (model)
         {
             case TimerModel timerModel:
-                EditTimerViewModel vm = new EditTimerViewModel(timerModel);
-                editTimerView.SetViewModel(vm);
+                EditTimerViewModel editTimerVM = new EditTimerViewModel(timerModel);
+                editTimerView.SetViewModel(editTimerVM);
                 editTimerView.gameObject.SetActive(true);
                 break;
             
             case StopwatchModel stopwatchModel:
-
+                EditStopwatchViewModel editStopwatchVM = new EditStopwatchViewModel(stopwatchModel);
+                editStopwatchView.SetViewModel(editStopwatchVM);
+                editStopwatchView.gameObject.SetActive(true);
                 break;
             
             case TimeDisplayModel timeDisplayModel:
