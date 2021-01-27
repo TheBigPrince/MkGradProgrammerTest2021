@@ -2,7 +2,6 @@
 using Protodroid.Clocks.Models;
 using Protodroid.MVVM;
 using UniRx;
-using UnityEngine.WSA;
 
 namespace Protodroid.Clocks.ViewModels
 {
