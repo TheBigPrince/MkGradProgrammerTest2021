@@ -33,11 +33,15 @@ namespace Protodroid.Clocks
         private AddClockView addClockButtonView = null;
 
         private List<ClockViewModel> clocks = new List<ClockViewModel>();
+        private Ticker timeTicker;
+
+        public Ticker TimeTicker => timeTicker;
 
 
         private void Awake()
         {
             CreateSingleton();
+            timeTicker = new Ticker();
         }
 
         private void Start()
@@ -49,7 +53,8 @@ namespace Protodroid.Clocks
                 .Subscribe(vm => clocks.Add(vm))
                 .AddTo(gameObject);
             
-            CreateStopWatch();
+            TimeDisplayModel model = new TimeDisplayModel {Title = "My Time Display"};
+            AddClock(model);
         }
 
 
@@ -62,7 +67,7 @@ namespace Protodroid.Clocks
                     break;
                 
                 case TimeDisplayModel timeDisplayModel:
-                    // clockFactory.Create(timeDisplayModel);
+                    clockFactory.Create(timeDisplayModel);
                     break;
                 
                 case TimerModel timerModel:
@@ -81,18 +86,6 @@ namespace Protodroid.Clocks
                 clocks.Remove(viewModel);
                 Destroy(viewModel.View.GameObject);
             }
-        }
-
-        public void EditClock(ClockViewModel viewModel)
-        {
-            // open up edit dialogue window
-        }
-
-        [ContextMenu("Create Stopwatch")]
-        public void CreateStopWatch()
-        {
-            StopwatchModel model = new StopwatchModel {Title = "My Clock", ClockCategory = "Stop Watch"};
-            AddClock(model);
         }
     }
 }

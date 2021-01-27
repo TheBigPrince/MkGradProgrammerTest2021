@@ -30,6 +30,9 @@ public class EditClockManager : MonoBehaviour
     [SerializeField]
     private EditStopwatchView editStopwatchView;
 
+    [SerializeField]
+    private EditTimeDisplayView editTimeDisplayView;
+
     private void Awake()
     {
         CreateSingleton();
@@ -54,7 +57,9 @@ public class EditClockManager : MonoBehaviour
                 break;
             
             case TimeDisplayModel timeDisplayModel:
-
+                EditTimeDisplayViewModel editTimeViewModel = new EditTimeDisplayViewModel(timeDisplayModel);
+                editTimeDisplayView.SetViewModel(editTimeViewModel);
+                editTimeDisplayView.gameObject.SetActive(true);
                 break;
         }
     }
