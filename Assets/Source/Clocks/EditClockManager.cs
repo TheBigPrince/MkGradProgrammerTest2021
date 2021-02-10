@@ -33,6 +33,8 @@ public class EditClockManager : MonoBehaviour
     [SerializeField]
     private EditTimeDisplayView editTimeDisplayView;
 
+    private IView activeEditClockView = null;
+
     private void Awake()
     {
         CreateSingleton();
@@ -48,18 +50,21 @@ public class EditClockManager : MonoBehaviour
                 EditTimerViewModel editTimerVM = new EditTimerViewModel(timerModel);
                 editTimerView.SetViewModel(editTimerVM);
                 editTimerView.gameObject.SetActive(true);
+                activeEditClockView = editTimerView;
                 break;
             
             case StopwatchModel stopwatchModel:
                 EditStopwatchViewModel editStopwatchVM = new EditStopwatchViewModel(stopwatchModel);
                 editStopwatchView.SetViewModel(editStopwatchVM);
                 editStopwatchView.gameObject.SetActive(true);
+                activeEditClockView = editStopwatchView;
                 break;
             
             case TimeDisplayModel timeDisplayModel:
                 EditTimeDisplayViewModel editTimeViewModel = new EditTimeDisplayViewModel(timeDisplayModel);
                 editTimeDisplayView.SetViewModel(editTimeViewModel);
                 editTimeDisplayView.gameObject.SetActive(true);
+                activeEditClockView = editTimeDisplayView;
                 break;
         }
     }
@@ -67,6 +72,7 @@ public class EditClockManager : MonoBehaviour
     public void CloseAll()
     {
         dialogueContainer.SetActive(false);
-        editTimerView.gameObject.SetActive(false);
+        activeEditClockView.GameObject.SetActive(false);
+        activeEditClockView = null;
     }
 }
