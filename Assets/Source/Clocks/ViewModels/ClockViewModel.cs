@@ -41,7 +41,7 @@ namespace Protodroid.Clocks.ViewModels
 
         public void EditClock(Unit _)
         {
-            EditClockManager.instance.EditClock(model);
+            EditClockManager.Instance.EditClock(model);
         }
         
         public override void NotifyView()

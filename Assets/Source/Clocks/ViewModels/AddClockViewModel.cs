@@ -32,7 +32,7 @@ namespace Protodroid.Clocks.ViewModels
         {
             AddClockButtonActive = true;
             ClockButtonsActive = false;
-            ClocksManager.instance.AddClock(model);
+            ClocksManager.Instance.AddClock(model);
         }
 
 

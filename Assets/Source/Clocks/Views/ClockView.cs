@@ -33,7 +33,7 @@ namespace Protodroid.Clocks.Views
         {
             ViewModel.OnSetTitle.Subscribe(title => titleTMP.text = title).AddTo(Disposer);
             ViewModel.OnSetCategory.Subscribe(category => categoryTMP.text = category).AddTo(Disposer);
-            deleteButton.OnClickAsObservable().Subscribe(_ => ClocksManager.instance.DeleteClock(ViewModel)).AddTo(Disposer);
+            deleteButton.OnClickAsObservable().Subscribe(_ => ClocksManager.Instance.DeleteClock(ViewModel)).AddTo(Disposer);
             editButton.OnClickAsObservable().Subscribe(ViewModel.EditClock).AddTo(Disposer);
         }
     }

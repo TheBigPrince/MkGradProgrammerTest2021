@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Protodroid.Clocks.Models;
 using Protodroid.Clocks.ViewModels;
 using Protodroid.Clocks.Views;
+using Protodroid.Helper;
 using Protodroid.MVVM;
 using UniRx;
 using UnityEngine;
@@ -11,21 +12,9 @@ using UnityEngine.UI;
 
 namespace Protodroid.Clocks
 {
-    public class ClocksManager : MonoBehaviour
+    public class ClocksManager : MonoSingleton<ClocksManager>
     {
-        #region Singleton
         
-        public static ClocksManager instance = null;
-
-        private void CreateSingleton()
-        {
-            if (instance == null) instance = this;
-            else Destroy(this);
-        }
-
-        #endregion
-        
-
         [SerializeField]
         public ClockFactory clockFactory = null;
 
@@ -36,11 +25,10 @@ namespace Protodroid.Clocks
         private Ticker timeTicker;
 
         public Ticker TimeTicker => timeTicker;
+        
 
-
-        private void Awake()
+        protected override void InitialiseOnAwake()
         {
-            CreateSingleton();
             timeTicker = new Ticker();
         }
 

@@ -56,7 +56,7 @@ namespace Protodroid.Clocks.ViewModels
                 .Subscribe(UpdateViewModel)
                 .AddTo(disposer);
             
-            ClocksManager.instance.TimeTicker
+            ClocksManager.Instance.TimeTicker
                 .OnOneSecondTick
                 .Select(_ => UseCustomTime)
                 .Subscribe(SetTime)

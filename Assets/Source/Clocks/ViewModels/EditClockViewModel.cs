@@ -26,13 +26,13 @@ namespace Protodroid.Clocks.ViewModels
         public virtual void SaveToModel()
         {
             model.Title = title;
-            EditClockManager.instance.CloseAll();
+            EditClockManager.Instance.CloseAll();
             onCloseDialog?.OnNext(Unit.Default);
         }
 
         public void Cancel(Unit _)
         {
-            EditClockManager.instance.CloseAll();
+            EditClockManager.Instance.CloseAll();
             onCloseDialog?.OnNext(Unit.Default);
         }
 
