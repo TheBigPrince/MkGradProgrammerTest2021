@@ -35,6 +35,8 @@ namespace Protodroid.Clocks.Views
             
             AddTimeFormatDropdownOptions();
             InitialiseTimeInputBindings();
+
+            useLocalTimeToggle.isOn = !ViewModel.UseCustomTime;
             
             useLocalTimeToggle.OnValueChangedAsObservable()
                 .Subscribe(toggleOn => ViewModel.UseCustomTime = !toggleOn)

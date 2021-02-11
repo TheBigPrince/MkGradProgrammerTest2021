@@ -69,6 +69,7 @@ namespace Protodroid.Clocks.ViewModels
             onTwentyFourHourTimeChanged
                 .Subscribe(_ =>
                 {
+                    TimeFormat = timeDisplayModel.TimeFormat;
                     ProcessTimeFormat();
                     TimeFormat = timeFormat;
                 })
@@ -80,10 +81,20 @@ namespace Protodroid.Clocks.ViewModels
         private void UpdateViewModel(ClockModel model)
         {
             TimeDisplayModel timeDisplayModel = (TimeDisplayModel) model;
-            CurrentTime = timeDisplayModel.CurrentTime;
-            UseCustomTime = timeDisplayModel.UseCustomTime;
-            TwentyFourHourTime = timeDisplayModel.TwentyFourHourTime;
-            TimeFormat = timeDisplayModel.TimeFormat;
+            
+            SetProperty(nameof(CurrentTime), timeDisplayModel.CurrentTime);
+            SetProperty(nameof(UseCustomTime), timeDisplayModel.UseCustomTime);
+            SetProperty(nameof(TwentyFourHourTime), timeDisplayModel.TwentyFourHourTime);
+            SetProperty(nameof(TimeFormat), timeDisplayModel.TimeFormat);
+        }
+
+        protected override void SaveToModel()
+        {
+            base.SaveToModel();
+            timeDisplayModel.CurrentTime = CurrentTime;
+            timeDisplayModel.UseCustomTime = UseCustomTime;
+            timeDisplayModel.TwentyFourHourTime = TwentyFourHourTime;
+            timeDisplayModel.TimeFormat = TimeFormat;
         }
 
         private void SetTime(bool usingCustomTime)
@@ -97,7 +108,7 @@ namespace Protodroid.Clocks.ViewModels
             if (!TwentyFourHourTime)
                 timeFormat = TimeFormat.ToLower();
             else
-                timeFormat = TimeFormat.Replace("h", "H");
+                timeFormat = TimeFormat.Replace("h", "H").Replace("t","").Trim();
         }
 
         private CompositeDisposable disposer = new CompositeDisposable();

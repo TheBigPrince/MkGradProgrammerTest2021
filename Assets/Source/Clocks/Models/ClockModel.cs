@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using Protodroid.MVVM;
-using UniRx;
-using UnityEngine;
 
 namespace Protodroid.Clocks.Models
 {

@@ -77,10 +77,15 @@ namespace Protodroid.Clocks.ViewModels
         private void UpdateViewModel(ClockModel model)
         {
             TimerModel timerModel = (TimerModel) model;
-            Time = timerModel.CountdownTime;
+            SetProperty(nameof(Time), timerModel.CountdownTime);
             TimerActive = false;
         }
 
+        protected override void SaveToModel()
+        {
+            base.SaveToModel();
+            timerModel.CountdownTime = Time;
+        }
 
 
         private CompositeDisposable disposer = new CompositeDisposable();

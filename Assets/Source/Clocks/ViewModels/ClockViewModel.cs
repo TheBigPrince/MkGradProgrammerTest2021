@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Protodroid.Clocks.Models;
 using Protodroid.MVVM;
 using UniRx;
@@ -39,9 +40,18 @@ namespace Protodroid.Clocks.ViewModels
                 .Subscribe(UpdateViewModel);
         }
 
+        protected virtual void SaveToModel()
+        {
+            model.Title = Title;
+            model.ClockCategory = Category;
+        }
+
         public void EditClock(Unit _)
         {
+            model.enableNotify = false;
+            SaveToModel();
             EditClockManager.Instance.EditClock(model);
+            model.enableNotify = true;
         }
         
         public override void NotifyView()
@@ -52,8 +62,18 @@ namespace Protodroid.Clocks.ViewModels
 
         private void UpdateViewModel(ClockModel clockModel)
         {
-            Title = model.Title;
-            Category = model.ClockCategory;
+            SetProperty(nameof(Title), model.Title);
+            SetProperty(nameof(Category), model.ClockCategory);
+        }
+
+        protected void SetProperty<T>(string propertyName, T targetValue)
+        {
+            PropertyInfo property = GetType().GetProperty(propertyName);
+
+            T currentValue = (T)property.GetValue(this, null);
+            
+            if (!currentValue.Equals(targetValue))
+                property.SetValue(this, targetValue);
         }
         
 
