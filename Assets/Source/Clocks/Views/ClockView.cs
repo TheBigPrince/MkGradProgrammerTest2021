@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Protodroid.Clocks.ViewModels;
+﻿using Protodroid.Clocks.ViewModels;
 using Protodroid.MVVM;
 using TMPro;
 using UnityEngine;
@@ -28,13 +27,27 @@ namespace Protodroid.Clocks.Views
         protected Button deleteButton;
 
         #endregion
-        
+
+        private Animator animator;
+
         protected override void InitialiseBindings()
         {
+            animator = GetComponent<Animator>();
             ViewModel.OnSetTitle.Subscribe(title => titleTMP.text = title).AddTo(Disposer);
             ViewModel.OnSetCategory.Subscribe(category => categoryTMP.text = category).AddTo(Disposer);
-            deleteButton.OnClickAsObservable().Subscribe(_ => ClocksManager.Instance.DeleteClock(ViewModel)).AddTo(Disposer);
+            deleteButton.OnClickAsObservable().Subscribe(OnDeleteButtonPressed).AddTo(Disposer);
             editButton.OnClickAsObservable().Subscribe(ViewModel.EditClock).AddTo(Disposer);
+        }
+
+        private void OnDeleteButtonPressed(Unit _)
+        {
+            if (!ClocksManager.Instance.IsLastClock(ViewModel))
+                animator.SetTrigger("Delete");
+        }
+        
+        public void Delete()
+        {
+            ClocksManager.Instance.DeleteClock(ViewModel);
         }
     }
 }

@@ -1377,6 +1377,7 @@ GameObject:
   - component: {fileID: 3697901542576571807}
   - component: {fileID: 3697901542576571806}
   - component: {fileID: 1865779174358900257}
+  - component: {fileID: 420784979264261425}
   m_Layer: 5
   m_Name: StopwatchView
   m_TagString: Untagged
@@ -1452,6 +1453,25 @@ MonoBehaviour:
   resetButton: {fileID: 3697901542830388629}
   playImage: {fileID: 21300000, guid: 38f718c5995628c4f9f5e5330006056f, type: 3}
   pauseImage: {fileID: 21300000, guid: 6de9494634f37904e8655d6a0697f438, type: 3}
+--- !u!95 &420784979264261425
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3697901542576571800}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 11d962455cce49a40ae60b020b968c51, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3697901542638769309
 GameObject:
   m_ObjectHideFlags: 0

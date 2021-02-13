@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Protodroid.Clocks.ViewModels;
 using TMPro;
 using UniRx;
@@ -12,11 +13,8 @@ namespace Protodroid.Clocks.Views
         [SerializeField]
         private Button twentyFourHourButton = null;
 
-
-
         private TextMeshProUGUI twentyFourHourButtonText = null;
-        
-        
+
         protected override void InitialiseBindings()
         {
             base.InitialiseBindings();

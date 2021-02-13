@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Protodroid.Clocks.Models;
 using Protodroid.Clocks.ViewModels;
 using Protodroid.Clocks.Views;
 using Protodroid.Helper;
-using Protodroid.MVVM;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 namespace Protodroid.Clocks
 {
@@ -69,11 +66,19 @@ namespace Protodroid.Clocks
         
         public void DeleteClock(ClockViewModel viewModel)
         {
-            if (clocks.Contains(viewModel) && clocks.Count > 1)
+            if (!IsLastClock(viewModel))
             {
                 clocks.Remove(viewModel);
                 Destroy(viewModel.View.GameObject);
             }
+        }
+
+        public bool IsLastClock(ClockViewModel viewModel)
+        {
+            if (clocks.Contains(viewModel) && clocks.Count > 1)
+                return false;
+            
+            return true;
         }
     }
 }
