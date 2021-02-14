@@ -79,6 +79,7 @@ namespace Protodroid.Clocks.ViewModels
             TimerModel timerModel = (TimerModel) model;
             SetProperty(nameof(Time), timerModel.CountdownTime);
             TimerActive = false;
+            onResetTimer?.OnNext(Unit.Default);
         }
 
         protected override void SaveToModel()
@@ -95,10 +96,12 @@ namespace Protodroid.Clocks.ViewModels
         private Subject<bool> onTimerActive = new Subject<bool>();
         private Subject<float> onUpdateTime = new Subject<float>();
         private Subject<bool> onTimerComplete = new Subject<bool>();
-        
+        private Subject<Unit> onResetTimer = new Subject<Unit>();
+
         public IObservable<bool> OnTimerActive => onTimerActive;
         public IObservable<float> OnUpdateTime => onUpdateTime;
         public IObservable<bool> OnTimerComplete => onTimerComplete;
+        public IObservable<Unit> OnResetTimer => onResetTimer;
         
         public override void NotifyView()
         {
